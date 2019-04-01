@@ -1,17 +1,38 @@
 package com.team.shop.service;
 
 import com.team.shop.bean.TestBean;
+import com.team.shop.bean.User;
 import com.team.shop.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class TestService {
 
     @Autowired
-    private TestMapper testMapper;
+    TestMapper testMapper;
 
-    public TestBean getTestBean(){
-        return testMapper.getTestBean();
+    public Integer add(String name){
+        return testMapper.addTestBean(name);
     }
+
+    public Integer delete(Integer id){
+        Integer integer = testMapper.deleteTestBeanById(id);
+        if(integer == 1)
+            throw new RuntimeException("测试");
+        return integer;
+    }
+
+    public Integer update(Integer id,String name){
+        return testMapper.updateTestBeanById(id,name);
+    }
+
+    public User select(Integer id){
+        return testMapper.getTestBeanById(id);
+    }
+
+
+
 }

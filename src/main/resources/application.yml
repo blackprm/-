@@ -5,9 +5,20 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://127.0.0.1:3306/test
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
+
+
+
+
+
+
+
+
+
+
 
 mybatis:
   mapper-locations: classpath:config/mybatis/mapper/*.xml
   config-location: classpath:config/mybatis/mybatis-config.xml
+
