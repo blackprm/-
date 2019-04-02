@@ -2,10 +2,21 @@ server:
   port: 80
 
 spring:
+  mail:
+    host: smtp.qq.com
+    username: 1144569608@qq.com
+    password: hmzkfaaefcrogcgb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/shop?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
@@ -22,7 +33,12 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,log4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 300MB  #单个文件的最大上限
+      max-request-size: 300MB #单个请求的文件总大小上限
 mybatis:
   mapper-locations: classpath:config/mybatis/mapper/*.xml
   config-location: classpath:config/mybatis/mybatis-config.xml
-
