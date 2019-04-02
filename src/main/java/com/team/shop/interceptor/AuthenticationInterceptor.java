@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.team.shop.annotation.PassToken;
 import com.team.shop.bean.User;
 import com.team.shop.service.TestService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
@@ -45,7 +44,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
 
         if(token == null){
-            JSONObject jsonObject = new JSONObject();
             // 没有token 直接拦截
             throw new RuntimeException("无token，请重新登录");
         }

@@ -5,7 +5,6 @@ import com.team.shop.bean.TestBean;
 import com.team.shop.bean.User;
 import com.team.shop.service.TestService;
 import com.team.shop.service.TokenService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -72,17 +73,17 @@ public class TestController {
 
     @PostMapping("/user")
     @PassToken
-    public Object login(Integer id,String lastName){
+    public  Map<String ,Object> login(Integer id,String lastName){
         User u = testService.select(id);
         if(u != null && u.getUserName().equals(lastName)){
             String token = tokenService.getToken(u);
-            JSONObject jsonObject = new JSONObject();
+            Map<String ,Object> jsonObject = new HashMap<>();
             jsonObject.put("code","1");
             jsonObject.put("message","登录成功");
             jsonObject.put("token",token);
             return jsonObject;
         }else{
-            JSONObject jsonObject = new JSONObject();
+            Map<String ,Object> jsonObject = new HashMap<>();
             jsonObject.put("code","0");
             jsonObject.put("message","密码错误");
             return jsonObject;
