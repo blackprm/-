@@ -5,7 +5,12 @@ import com.team.shop.bean.TestBean;
 import com.team.shop.bean.User;
 import com.team.shop.service.TestService;
 import com.team.shop.service.TokenService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Component
 @RequestMapping("/api")
+@PropertySource("uploadFiles.properties")
+@ConfigurationProperties(prefix = "uploadfiles")
+
 public class TestController {
 
     @Autowired
@@ -27,6 +36,9 @@ public class TestController {
     private TokenService tokenService;
 
 
+    @Getter
+    @Setter
+    public String realPath;
 
 
     @GetMapping("/user/{id}")
@@ -57,12 +69,18 @@ public class TestController {
 
 
     @PostMapping("/file")
-    public String fild(MultipartFile file, HttpSession session){
-        String realPath = "E:\\WorkSpace\\IDEAJAVA\\shop\\src\\main\\resources\\images";
-        String originalFilename =System.currentTimeMillis() + file.getOriginalFilename();
-        File f = new File(realPath,originalFilename);
+    @PassToken
+    public String file(MultipartFile []files, HttpSession session){
+        System.out.println(realPath);
+        System.out.println("file被访问" + files);
+        if(files == null){
+            return "error:404";
+        }
         try {
-            file.transferTo(f);
+            for(MultipartFile file:files){
+
+                file.transferTo(new File(realPath + file.getOriginalFilename()));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.sql.DataSource;
 
 @RunWith(SpringRunner.class)
+// 在配置完websocket时,只有加上这个注解才能进行单元测试
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DataSourceTest {
 
