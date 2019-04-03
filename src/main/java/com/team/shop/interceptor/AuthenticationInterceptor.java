@@ -3,10 +3,11 @@ package com.team.shop.interceptor;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.team.shop.annotation.PassToken;
 import com.team.shop.bean.User;
+import com.team.shop.bean.t_User;
 import com.team.shop.service.TestService;
+import com.team.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
@@ -21,7 +22,7 @@ import java.lang.reflect.Method;
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Autowired
-    TestService testService;
+    UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -59,18 +60,20 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             throw new RuntimeException("401");
         }
         // 从负载中获取用户id
-        User select = testService.select(userId);
-        if(select == null){
+        User u = userService.getUser(userId);
+        if(u == null){
             throw new RuntimeException("401");
         }
 
         // 验证token
-        JWTVerifier jwtVerifier =JWT.require(Algorithm.HMAC256(select.getUserName())).build();
+        JWTVerifier jwtVerifier =JWT.require(Algorithm.HMAC256(u.getUserPassword())).build();
         try {
             jwtVerifier.verify(token);
         }catch (Exception e){
             throw new RuntimeException("401");
         }
+
+
         return true;
 
 

@@ -1,8 +1,7 @@
 package com.team.shop.mapper;
 
 
-import com.team.shop.bean.User;
-import org.apache.ibatis.annotations.Mapper;
+import com.team.shop.bean.t_User;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -19,5 +18,5 @@ public interface TestMapper {
     public Integer updateTestBeanById(@Param("id") Integer id, @Param("name") String name);
 
     // 查
-    public User getTestBeanById(Integer id);
+    public t_User getTestBeanById(Integer id);
 }

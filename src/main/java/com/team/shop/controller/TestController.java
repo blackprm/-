@@ -1,8 +1,7 @@
 package com.team.shop.controller;
 
 import com.team.shop.annotation.PassToken;
-import com.team.shop.bean.TestBean;
-import com.team.shop.bean.User;
+import com.team.shop.bean.t_User;
 import com.team.shop.service.TestService;
 import com.team.shop.service.TokenService;
 import lombok.Getter;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +41,7 @@ public class TestController {
 
     @GetMapping("/user/{id}")
     @PassToken
-    public User get(@PathVariable("id") Integer id){
+    public t_User get(@PathVariable("id") Integer id){
         if(id == 1){
             throw new RuntimeException("无token，请重新登录");
         }
@@ -89,23 +87,6 @@ public class TestController {
 
 
 
-    @PostMapping("/user")
-    @PassToken
-    public  Map<String ,Object> login(Integer id,String lastName){
-        User u = testService.select(id);
-        if(u != null && u.getUserName().equals(lastName)){
-            String token = tokenService.getToken(u);
-            Map<String ,Object> jsonObject = new HashMap<>();
-            jsonObject.put("code","1");
-            jsonObject.put("message","登录成功");
-            jsonObject.put("token",token);
-            return jsonObject;
-        }else{
-            Map<String ,Object> jsonObject = new HashMap<>();
-            jsonObject.put("code","0");
-            jsonObject.put("message","密码错误");
-            return jsonObject;
-        }
-    }
+
 
 }

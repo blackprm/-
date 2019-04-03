@@ -1,14 +1,18 @@
 package com.team.shop.bean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
+import lombok.*;
+
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
-
-    public Integer id;
-    public String userName;
+    private Integer userId;             // 用户id
+    private String userPhotoPath;       // 用户头像路径
+    private String userNike;            // 用户昵称
+    private String userEmail;           // 用户邮箱
+    private String userPhone;           // 用户电话
+    private String userPassword;        // 用户密码
 }

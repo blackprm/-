@@ -1,7 +1,6 @@
 package com.team.shop.service;
 
-import com.team.shop.bean.TestBean;
-import com.team.shop.bean.User;
+import com.team.shop.bean.t_User;
 import com.team.shop.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class TestService {
         return testMapper.updateTestBeanById(id,name);
     }
 
-    public User select(Integer id){
+    public t_User select(Integer id){
         return testMapper.getTestBeanById(id);
     }
 

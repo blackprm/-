@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team.shop.mapper.UserMapper">
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO t_user(user_photo_path,user_nike,user_email,user_phone,user_password)
+        VALUES (#{userPhotoPath},#{userNike},#{userEmail},#{userPhone},#{userPassword})
+    </insert>
+
+    <select id="getUserByEmail" resultType="com.team.shop.bean.User">
+        SELECT * FROM t_user WHERE user_email = #{email}
+    </select>
+    <select id="getUser" resultType="com.team.shop.bean.User">
+        SELECT * FROM t_user WHERE user_id = #{id}
+    </select>
+
+    <update id="updateUserNike">
+        UPDATE t_user SET user_nike = #{newNike} WHERE user_id = #{id}
+    </update>
+
+</mapper>

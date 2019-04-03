@@ -1,7 +1,6 @@
 package com.team.shop.mapper;
 
-import com.team.shop.bean.TestBean;
-import com.team.shop.bean.User;
+import com.team.shop.bean.t_User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class crud {
 
     @Test
     public void get(){
-        User testBeanById = testMapper.getTestBeanById(5);
+        t_User testBeanById = testMapper.getTestBeanById(5);
         System.out.println(testBeanById);
     }
 

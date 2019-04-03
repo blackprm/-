@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.team.shop.mapper.TestMapper">
 
-    <select id="getTestBeanById" resultType="com.team.shop.bean.User">
+    <select id="getTestBeanById" resultType="com.team.shop.bean.t_User">
       SELECT id,user_name userName FROM `user` WHERE id = #{id}
     </select>
 
