@@ -40,4 +40,24 @@ public class UserService {
     public User getUserByEmail(String email){
         return userMapper.getUserByEmail(email);
     }
+
+    /**
+     *  根据用户邮箱和密码查找用户
+     * @param email 用户邮箱
+     * @param password 用户密码
+     * @return 成功返回用户实体,失败返回null
+     */
+    public User getUserByEmailAndPassword(String email,String password){
+        return userMapper.getUserByEamilAndPassword(email,password);
+    }
+
+    /**
+     * 根据用户邮箱更改密码
+     * @param email 用户邮箱
+     * @param password 用户新密码
+     * @return 更改成功返回 1,更改失败返回 0
+     */
+    public Integer updateUserPasswordByEmail(String email,String password){
+        return userMapper.updateUserPasswordByEmail(email,password);
+    }
 }

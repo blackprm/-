@@ -66,4 +66,23 @@ public class UserTest {
     }
 
 
+    @Test
+    /**
+     * 更改用户昵称
+     */
+    public void getUserByEmailAndPassword(){
+        User u = userMapper.getUserByEamilAndPassword("1144569608@qq.com", "123456789");
+        System.out.println(u);
+    }
+
+
+
+    @Test
+    /**
+     * 更改用户昵称
+     */
+    public void updateUserPasswordByEmail(){
+        Integer i = userMapper.updateUserPasswordByEmail("1144569608@qq.com", "xxxxx");
+        System.out.println(i);
+    }
 }

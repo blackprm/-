@@ -22,16 +22,23 @@ import java.util.Map;
 @RestController
 @Component
 @RequestMapping("/api")
-@PropertySource("uploadFiles.properties")
+@PropertySource("classpath:uploadFiles.properties")
 @ConfigurationProperties(prefix = "uploadfiles")
 
 public class TestController {
 
-    @Autowired
+
+
     private TestService testService;
 
     @Autowired
-    private TokenService tokenService;
+    public void setTestService(TestService testService) {
+        this.testService = testService;
+    }
+
+
+
+
 
 
     @Getter
@@ -39,14 +46,7 @@ public class TestController {
     public String realPath;
 
 
-    @GetMapping("/user/{id}")
-    @PassToken
-    public t_User get(@PathVariable("id") Integer id){
-        if(id == 1){
-            throw new RuntimeException("无token，请重新登录");
-        }
-        return testService.select(id);
-    }
+
 
     @PutMapping("/user")
     public Integer update(Integer id,String name){

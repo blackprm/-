@@ -7,6 +7,11 @@
         VALUES (#{userPhotoPath},#{userNike},#{userEmail},#{userPhone},#{userPassword})
     </insert>
 
+
+    <select id="getUserByEamilAndPassword" resultType="com.team.shop.bean.User">
+        SELECT * FROM t_user WHERE user_email = #{email} and user_password = #{password}
+    </select>
+
     <select id="getUserByEmail" resultType="com.team.shop.bean.User">
         SELECT * FROM t_user WHERE user_email = #{email}
     </select>
@@ -16,6 +21,11 @@
 
     <update id="updateUserNike">
         UPDATE t_user SET user_nike = #{newNike} WHERE user_id = #{id}
+    </update>
+
+
+    <update id="updateUserPasswordByEmail">
+        UPDATE t_user SET user_password = #{password} WHERE user_email = #{email}
     </update>
 
 </mapper>
