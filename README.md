@@ -1,5 +1,5 @@
 # 测试表sql
-```
+```sql
 CREATE TABLE `test`.`Untitled`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
