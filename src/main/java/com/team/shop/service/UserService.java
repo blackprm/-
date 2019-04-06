@@ -60,4 +60,24 @@ public class UserService {
     public Integer updateUserPasswordByEmail(String email,String password){
         return userMapper.updateUserPasswordByEmail(email,password);
     }
+
+    /**
+     * 更新用户昵称
+     * @param id
+     * @param name
+     * @return
+     */
+    public Integer updateUserNike(Integer id,String name){
+        return userMapper.updateUserNike(id,name);
+    }
+
+    /**
+     * 更新用户电话
+     * @param id 用户id
+     * @param phone 用户电话号码
+     * @return
+     */
+    public Integer updateUserPhone(Integer id,String phone){
+        return userMapper.updateUserPhone(id,phone);
+    }
 }

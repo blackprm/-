@@ -1,5 +1,6 @@
 package com.team.shop.service;
 
+import com.team.shop.exception.EmailErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +16,7 @@ public class EmailService {
      * @param toEmail
      * @return
      */
-    public Integer sendActiveCode(String toEmail){
+    public Integer sendActiveCode(String toEmail) throws EmailErrorException {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("1144569608@qq.com");
@@ -23,7 +24,14 @@ public class EmailService {
         message.setSubject("主题：激活验证码");
         long l = System.currentTimeMillis() % 10000;
         message.setText("农大二手交易平台注册验证码为:" + l);
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+        }catch (Exception e){
+            throw new EmailErrorException("邮箱格式错误或不存在");
+        }
+
+
+
         return (int)l;
 
     }

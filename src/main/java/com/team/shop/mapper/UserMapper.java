@@ -41,6 +41,13 @@ public interface UserMapper {
      */
     Integer updateUserNike(@Param("id") Integer id, @Param("newNike") String newNike);
 
+    /**
+     * 根据id更新用户号码
+     * @param id
+     * @param newPhone
+     * @return
+     */
+    Integer updateUserPhone(@Param("id") Integer id, @Param("newPhone") String newPhone);
 
     /**
      *  根究邮箱更爱密码

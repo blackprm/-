@@ -3,8 +3,8 @@
 <mapper namespace="com.team.shop.mapper.UserMapper">
 
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
-        INSERT INTO t_user(user_photo_path,user_nike,user_email,user_phone,user_password)
-        VALUES (#{userPhotoPath},#{userNike},#{userEmail},#{userPhone},#{userPassword})
+        INSERT INTO t_user(user_nike,user_email,user_phone,user_password)
+        VALUES (#{userNike},#{userEmail},#{userPhone},#{userPassword})
     </insert>
 
 
@@ -21,6 +21,10 @@
 
     <update id="updateUserNike">
         UPDATE t_user SET user_nike = #{newNike} WHERE user_id = #{id}
+    </update>
+
+    <update id="updateUserPhone">
+        UPDATE t_user SET user_phone = #{newPhone} WHERE user_id = #{id}
     </update>
 
 

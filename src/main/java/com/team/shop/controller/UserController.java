@@ -1,19 +1,24 @@
 package com.team.shop.controller;
 
+
 import com.team.shop.annotation.PassToken;
 import com.team.shop.bean.User;
+import com.team.shop.exception.EmailErrorException;
+import com.team.shop.pojo.UserInfo;
+import com.team.shop.pojo.UserLogin;
 import com.team.shop.service.EmailService;
 import com.team.shop.service.TokenService;
 import com.team.shop.service.UploadFileService;
 import com.team.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -50,13 +55,9 @@ public class UserController {
      */
     @PostMapping("/user")
     @PassToken
-    public Map<String,Object> userRegister(MultipartFile file,User u) throws IOException {
+    public Map<String,Object> userRegister(@RequestBody User u) throws IOException {
         Map<String,Object> result = new HashMap<>();
-        if(file == null){
-            result.put("code",-1);
-            result.put("message","请选择头像!");
-             return result;
-        }
+
         User userByEmail = userService.getUserByEmail(u.getUserEmail());
 
 
@@ -66,11 +67,7 @@ public class UserController {
             result.put("message","该已被邮箱注册!");
             return result;
         }else{
-            String finalFileName = UUID.randomUUID() + file.getOriginalFilename();
-            // 存储文件
-            uploadFileService.saveFileAsName(file,finalFileName);
 
-            u.setUserPhotoPath(finalFileName);
 
             userService.addUser(u);
             // 注册成功
@@ -87,14 +84,21 @@ public class UserController {
     }
 
 
+    @PostMapping("/filetest")
+    @PassToken
+    public Map<String,Object> fileTest(){
+        return null;
+    }
+
     /**
      *  向用户邮箱发送验证码
-     * @param userEmail 用户的邮箱
+     * @param m 用户数据
      * @return 和邮箱内容一样的验证码
      */
     @PostMapping("/active_code")
     @PassToken
-    public Map<String,Object> getActiveCode(String userEmail){
+    public Map<String,Object> getActiveCode(@RequestBody Map<String ,Object> m) throws EmailErrorException {
+        String userEmail = (String) m.get("userEmail");
         Integer activeCode = emailService.sendActiveCode(userEmail);
         Map<String,Object> result = new HashMap<>();
         result.put("code",1);
@@ -103,32 +107,14 @@ public class UserController {
     }
 
 
-    /**
-     *  用户登录 凭借着 邮箱 登录
-     * @param userEmail     用户邮箱
-     * @param password      用户密码
-     * @return
-     *     成功返回
-     * {
-     *     "code": 1,
-     *     "user": {
-     *         "userId": 21,
-     *         "userPhotoPath": "a8487da9-c361-44d3-a03d-7f399cf2e659WIN_20190331_23_35_42_Pro.jpg",
-     *         "userNike": "blackprm",
-     *         "userEmail": "1144569608@qq.com",
-     *         "userPhone": "15579191230",
-     *         "userPassword": "123456789"
-     *     },
-     *     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMSJ9.wV2DymVJXJg2pAn18wUa0La5ViLLuQvyizfpNT2CdKk"
-     * }
-     *     失败返回
-     *
-     */
     @PostMapping("/login")
     @PassToken
-    public Map<String,Object> userLogin(String userEmail,String password){
+    public Map<String,Object> userLogin(@RequestBody  UserLogin us){
+
+
+
         Map<String,Object> res = new HashMap<>();
-        User u = userService.getUserByEmailAndPassword(userEmail, password);
+        User u = userService.getUserByEmailAndPassword(us.getUserEmail(), us.getPassword());
 
         if(u == null){
             // 登录失败
@@ -145,6 +131,7 @@ public class UserController {
             res.put("token",tokenService.getToken(u));
             return res;
         }
+
     }
 
 
@@ -201,5 +188,39 @@ public class UserController {
             res.put("message","修改失败,请检查信息");
             return res;
         }
+    }
+
+    /**
+     *
+     */
+    @PostMapping("/updateUserPhoto")
+    @PassToken
+    public Map<String,Object> updateUserInfo(@RequestParam("file") MultipartFile file){
+        System.out.println(file);
+        return null;
+    }
+
+
+    /**
+     *
+     */
+    @PostMapping("/updateUserInfoToUserNikeAndPhone")
+    @PassToken
+    public Map<String,Object> updateUserInfoToUserNikeAndPhone(@RequestBody UserInfo userInfo){
+        Map<String,Object> res = new HashMap<String,Object>();
+        Integer newNike = userService.updateUserNike(userInfo.getId(), userInfo.getName());
+        if(newNike == 1){
+            res.put("nikeMessage","修改昵称成功");
+        }else{
+            res.put("nikeMessage","修改昵称失败");
+        }
+
+        Integer newPhone = userService.updateUserPhone(userInfo.getId(), userInfo.getPhone());
+        if(newPhone == 1){
+            res.put("phoneMessage","修改手机号码成功");
+        }else{
+            res.put("phoneMessage","修改手机号码失败");
+        }
+        return res;
     }
 }

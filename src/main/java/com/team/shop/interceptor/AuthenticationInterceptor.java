@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.team.shop.annotation.PassToken;
 import com.team.shop.bean.User;
+import com.team.shop.exception.NoTokenException;
 import com.team.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
 
         boolean annotationPresent = method.isAnnotationPresent(PassToken.class);
+        System.out.println(annotationPresent);
+        System.out.println("访问的方法名字是 "+ method.getName());
         if(annotationPresent){
             // 不需要认证直接放行
             return true;
@@ -44,7 +47,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         if(token == null){
             // 没有token 直接拦截
-            throw new RuntimeException("无token，请重新登录");
+            throw new NoTokenException("无token，请重新登录");
         }
 
         /**
@@ -55,12 +58,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         try{
             userId = Integer.parseInt(JWT.decode(token).getAudience().get(0));
         }catch (Exception e){
-            throw new RuntimeException("401");
+            throw new NoTokenException("该用户不存在!非法访问!");
         }
         // 从负载中获取用户id
         User u = userService.getUser(userId);
         if(u == null){
-            throw new RuntimeException("401");
+            throw new RuntimeException("该用户不存在!非法访问!");
         }
 
         // 验证token
@@ -68,7 +71,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         try {
             jwtVerifier.verify(token);
         }catch (Exception e){
-            throw new RuntimeException("401");
+            throw new RuntimeException("token验证失败");
         }
 
 

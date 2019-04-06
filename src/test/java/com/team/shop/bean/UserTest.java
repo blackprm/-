@@ -85,4 +85,14 @@ public class UserTest {
         Integer i = userMapper.updateUserPasswordByEmail("1144569608@qq.com", "xxxxx");
         System.out.println(i);
     }
+
+
+    @Test
+    /**
+     * 更改用户电话
+     */
+    public void updateUserPhone(){
+        Integer i = userMapper.updateUserPhone(22, "xxxxx");
+        System.out.println(i);
+    }
 }
