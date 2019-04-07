@@ -27,6 +27,13 @@ public interface UserMapper {
     User getUserByEamilAndPassword(@Param("email") String email,@Param("password") String password);
 
     /**
+     *  邮箱和密码登录
+     * @param phone 用户手机
+     * @param password 用户密码
+     * @return 返回找到的用户或者null
+     */
+    User getUserByPhoneAndPassword(@Param("phone") String phone,@Param("password") String password);
+    /**
      * 根据id获取用户
      * @param id
      * @return
@@ -57,7 +64,13 @@ public interface UserMapper {
      */
     Integer updateUserPasswordByEmail(@Param("email") String email,@Param("password") String password);
 
-
+    /**
+     * 更新用户头像
+     * @param id
+     * @param pic
+     * @return
+     */
+    Integer updateUserPic(@Param("id") Integer id, @Param("pic") String pic);
 
 
 }

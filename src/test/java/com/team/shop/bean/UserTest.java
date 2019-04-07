@@ -30,7 +30,6 @@ public class UserTest {
         user.setUserNike("blackprm");
         user.setUserEmail("1144569608@qq.com");
         user.setUserPhone("15579191230");
-        user.setUserPhotoPath("defaultPath");
         user.setUserPassword("1245645456");
         userMapper.addUser(user);
         System.out.println(user);

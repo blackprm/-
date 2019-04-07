@@ -19,6 +19,10 @@
         SELECT * FROM t_user WHERE user_id = #{id}
     </select>
 
+    <select id="getUserByPhoneAndPassword" resultType="com.team.shop.bean.User">
+        SELECT * FROM t_user WHERE user_phone = #{phone} and user_password = #{password}
+    </select>
+
     <update id="updateUserNike">
         UPDATE t_user SET user_nike = #{newNike} WHERE user_id = #{id}
     </update>
@@ -30,6 +34,11 @@
 
     <update id="updateUserPasswordByEmail">
         UPDATE t_user SET user_password = #{password} WHERE user_email = #{email}
+    </update>
+
+
+    <update id="updateUserPic">
+        UPDATE t_user SET user_photo_path = #{pic} WHERE user_id = #{id}
     </update>
 
 </mapper>

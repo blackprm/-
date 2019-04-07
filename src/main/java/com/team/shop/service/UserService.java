@@ -41,6 +41,8 @@ public class UserService {
         return userMapper.getUserByEmail(email);
     }
 
+
+
     /**
      *  根据用户邮箱和密码查找用户
      * @param email 用户邮箱
@@ -51,6 +53,16 @@ public class UserService {
         return userMapper.getUserByEamilAndPassword(email,password);
     }
 
+
+    /**
+     *  根据手机号和密码返回用户信息
+     * @param phone 用户手机号
+     * @param password 用户密码
+     * @return
+     */
+    public User getUserByPhoneAndPassword(String phone,String password){
+        return userMapper.getUserByPhoneAndPassword(phone,password);
+    }
     /**
      * 根据用户邮箱更改密码
      * @param email 用户邮箱
@@ -79,5 +91,16 @@ public class UserService {
      */
     public Integer updateUserPhone(Integer id,String phone){
         return userMapper.updateUserPhone(id,phone);
+    }
+
+    /**
+     *  更新用户头像
+     *
+     * @param id
+     * @param pic
+     * @return
+     */
+    public Integer updateUserPic(Integer id,String pic){
+        return userMapper.updateUserPic(id,pic);
     }
 }

@@ -45,6 +45,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("token");
 
+
+
+        System.out.println("拦截器中的 token " + token);
+
+
+
         if(token == null){
             // 没有token 直接拦截
             throw new NoTokenException("无token，请重新登录");
@@ -58,20 +64,24 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         try{
             userId = Integer.parseInt(JWT.decode(token).getAudience().get(0));
         }catch (Exception e){
+
             throw new NoTokenException("该用户不存在!非法访问!");
         }
         // 从负载中获取用户id
         User u = userService.getUser(userId);
         if(u == null){
-            throw new RuntimeException("该用户不存在!非法访问!");
+
+            throw new NoTokenException("该用户不存在!非法访问!");
         }
 
         // 验证token
-        JWTVerifier jwtVerifier =JWT.require(Algorithm.HMAC256(u.getUserPassword())).build();
+        String userPassword = u.getUserPassword();
+        System.out.println(userPassword);
+        JWTVerifier jwtVerifier =JWT.require(Algorithm.HMAC256(userPassword)).build();
         try {
             jwtVerifier.verify(token);
         }catch (Exception e){
-            throw new RuntimeException("token验证失败");
+            throw new NoTokenException("该用户不存在!非法访问!");
         }
 
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team.shop.mapper.CommodityMapper">
+    <!--添加发布类型-->
+    <insert id="addCommodity" useGeneratedKeys="true" keyProperty="publishId">
+      INSERT INTO t_publish(publish_title,publish_date,publish_price,publish_content,fk_user_id,publish_kinds,publish_style)
+      VALUES (#{publishTitle},#{publishDate},#{publishPrice},#{publishContent},#{fkUserId},#{publishKinds},#{publishStyle})
+    </insert>
+
+    <!-- 添加评论 -->
+    <insert id="addComment" useGeneratedKeys="true" keyProperty="articleCommentId">
+        INSERT INTO t_article_comment(article_comment_content,article_comment_date,fk_article_id,fk_user_id)
+        VALUES (#{articleCommentContent},#{articleCommentDate},#{fkArticleId},#{fkUserId})
+    </insert>
+
+    <!-- 获取所有商品 -->
+    <resultMap id="ArticleAndCommentAndUser" type="com.team.shop.pojo.ArticleAndCommentAndUser">
+        <id property="publishId" column="publish_id"/>
+        <result property="publishTitle" column="publish_title" />
+        <result property="publishPrice" column="publish_price" />
+        <result property="publishDate" column="publish_date" />
+        <result property="publishContent" column="publish_content" />
+        <result property="fkUserId" column="fk_user_id" />
+        <result property="publishKinds" column="publish_kinds" />
+        
+        <association property="user" javaType="com.team.shop.bean.User">
+            <id property="userId" column="user_id" />
+            <result property="userNike" column="user_nike"/>
+            <result property="userEmail" column="user_email"/>
+            <result property="userPhone" column="user_phone"/>
+            <result property="userPassword" column="user_password"/>
+        </association>
+
+        <collection property="articleComments" ofType="com.team.shop.bean.ArticleComment">
+            <id property="articleCommentId" column="article_comment_id" />
+            <result property="articleCommentDate" column="article_comment_date" />
+            <result property="articleCommentContent" column="article_comment_content" />
+            <result property="fkArticleId" column="fk_article_id" />
+            <result property="fkUserId" column="fk_comment_user_id" />
+
+        </collection>
+    </resultMap>
+    <select id="getAllArticleAndCommentAndUser" resultMap="ArticleAndCommentAndUser">
+        SELECT
+            `t_publish`.*,
+            `t_user`.*,
+            `t_article_comment`.article_comment_content article_comment_content,
+            `t_article_comment`.article_comment_date article_comment_date,
+            `t_article_comment`.article_comment_id article_comment_id,
+            `t_article_comment`.fk_article_id fk_article_id,
+            `t_article_comment`.fk_user_id fk_comment_user_id
+        FROM
+            t_publish
+                LEFT JOIN t_article_comment ON ( t_publish.publish_id = t_article_comment.fk_article_id )
+                LEFT JOIN t_user ON ( t_publish.fk_user_id = t_user.user_id )
+    </select>
+
+    <!-- 获取指定id的商品细节-->
+    <select id="getCommodityById" resultType="com.team.shop.bean.Commodity">
+        SELECT * FROM t_publish WHERE publish_id = #{id}
+    </select>
+</mapper>
