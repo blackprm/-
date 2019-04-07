@@ -13,6 +13,10 @@
         VALUES (#{articleCommentContent},#{articleCommentDate},#{fkArticleId},#{fkUserId})
     </insert>
 
+    
+    <insert id="addArticlePhotoPath">
+        INSERT INTO
+    </insert>
     <!-- 获取所有商品 -->
     <resultMap id="ArticleAndCommentAndUser" type="com.team.shop.pojo.ArticleAndCommentAndUser">
         <id property="publishId" column="publish_id"/>
@@ -29,6 +33,7 @@
             <result property="userEmail" column="user_email"/>
             <result property="userPhone" column="user_phone"/>
             <result property="userPassword" column="user_password"/>
+            <result property="userPhotoPath" column="user_photo_path"/>
         </association>
 
         <collection property="articleComments" ofType="com.team.shop.bean.ArticleComment">

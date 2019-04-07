@@ -47,6 +47,11 @@ public class CommodityController {
          }
     }
 
+    /**
+     * 添加评论
+     * @param articleComment
+     * @return
+     */
     @PostMapping("/addComment")
     public Map<String,Object> addComment(@RequestBody ArticleComment articleComment){
         Map<String,Object> res = new HashMap<>();
@@ -62,6 +67,10 @@ public class CommodityController {
         }
     }
 
+    /**
+     *  获取所有商品细节
+     * @return
+     */
     @GetMapping("/getAllCommodity")
     public Map<String,Object> getAllCommodityAndCommentAndUser(){
         Map<String,Object> res = new HashMap<>();
@@ -70,8 +79,13 @@ public class CommodityController {
         return res;
     }
 
-    @GetMapping("/getCommodityById/{id}")
 
+    /**
+     *  根据Id获取商品细节
+     * @param id
+     * @return
+     */
+    @GetMapping("/getCommodityById/{id}")
     public Commodity getCommodityById(@PathVariable("id") Integer id){
         return commodityService.getCommodityById(id);
     }

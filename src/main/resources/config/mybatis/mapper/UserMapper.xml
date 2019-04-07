@@ -41,4 +41,9 @@
         UPDATE t_user SET user_photo_path = #{pic} WHERE user_id = #{id}
     </update>
 
+
+    <update id="updateUseDesc">
+        UPDATE t_user SET user_des = #{desc} WHERE user_id = #{id}
+    </update>
+
 </mapper>

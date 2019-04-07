@@ -14,4 +14,6 @@ public class User {
     private String userEmail;           // 用户邮箱
     private String userPhone;           // 用户电话
     private String userPassword;        // 用户密码
+    private String userPhotoPath;       // 用户头像名
+    private String userDes;             // 用户个性签名
 }

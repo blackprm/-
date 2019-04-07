@@ -14,5 +14,6 @@ public class UserInfo {
     private String name;
     private String phone;
     private String pic;
+    private String desc;
 
 }

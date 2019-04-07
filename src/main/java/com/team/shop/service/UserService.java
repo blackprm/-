@@ -103,4 +103,14 @@ public class UserService {
     public Integer updateUserPic(Integer id,String pic){
         return userMapper.updateUserPic(id,pic);
     }
+
+    /**
+     *  修改用户个性签名
+     * @param id
+     * @param desc
+     * @return
+     */
+    public Integer updateUserDesc(Integer id,String desc){
+        return userMapper.updateUseDesc(id,desc);
+    }
 }

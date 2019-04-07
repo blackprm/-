@@ -149,7 +149,7 @@ public class UserController {
     @GetMapping("/user/{email}")
     @PassToken
     public Map<String,Object> judgeUserExistByEmail(@PathVariable("email") String emali){
-        System.out.println("123123");
+
         Map<String,Object> res =new HashMap<>();
         User u = userService.getUserByEmail(emali);
         if(u == null){
@@ -159,6 +159,7 @@ public class UserController {
         }else{
             // 用户存再返回 1
             res.put("code",1);
+            res.put("user",u);
             return res;
         }
     }
@@ -202,6 +203,11 @@ public class UserController {
         if(userService.updateUserPic(id,userInfo.getPic()) == 1){
             res.put("picMessage","修改昵称成功");
         }
+
+        if(userService.updateUserDesc(id,userInfo.getDesc()) == 1){
+            res.put("descMesage","修改签名成功");
+        }
+
         if(newNike == 1){
             res.put("nikeMessage","修改昵称成功");
         }

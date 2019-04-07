@@ -2,6 +2,7 @@ package com.team.shop.mapper;
 
 import com.team.shop.bean.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface UserMapper {
     /**
@@ -66,11 +67,18 @@ public interface UserMapper {
 
     /**
      * 更新用户头像
-     * @param id
-     * @param pic
+     * @param id 用户id
+     * @param pic 用户头像
      * @return
      */
     Integer updateUserPic(@Param("id") Integer id, @Param("pic") String pic);
 
+    /**
+     *  修改用户个性签名
+     * @param id
+     * @param desc
+     * @return
+     */
+    Integer updateUseDesc(@Param("id") Integer id, @Param("desc") String desc);
 
 }

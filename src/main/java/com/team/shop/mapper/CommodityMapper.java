@@ -33,4 +33,9 @@ public interface CommodityMapper {
      * @return
      */
     public Commodity getCommodityById(Integer id);
+
+    /**
+     * 添加帖子照片路径
+     */
+    public void addArticlePhotoPath(Integer fkUser,String photoPath);
 }

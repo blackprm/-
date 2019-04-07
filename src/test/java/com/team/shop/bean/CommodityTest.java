@@ -20,7 +20,7 @@ public class CommodityTest {
     CommodityMapper commodityMapper;
 
     @Test
-    public void add(){
+    public void add() {
         Commodity commodity = new Commodity();
         commodity.setPublishContent("这是内容");
         commodity.setPublishDate(new Date());
@@ -32,7 +32,7 @@ public class CommodityTest {
 
 
     @Test
-    public void addComment(){
+    public void addComment() {
         ArticleComment articleComment = new ArticleComment();
         articleComment.setArticleCommentDate(new Date());
         articleComment.setArticleCommentContent("我是评论内容");
@@ -45,14 +45,14 @@ public class CommodityTest {
 
 
     @Test
-    public void ArticleAndCommentAndUser(){
+    public void ArticleAndCommentAndUser() {
 
         List<ArticleAndCommentAndUser> allArticleAndCommentAndUser = commodityMapper.getAllArticleAndCommentAndUser();
-        System.out.println(allArticleAndCommentAndUser.get(0).getArticleComments());
+        System.out.println(allArticleAndCommentAndUser.get(0).getUser().getUserPhotoPath());
     }
 
     @Test
-    public void getCommodityById(){
+    public void getCommodityById() {
         Commodity c = commodityMapper.getCommodityById(20);
         System.out.println(c);
     }
