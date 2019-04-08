@@ -39,4 +39,16 @@ public interface CommodityMapper {
      * 添加帖子照片路径
      */
     public void addArticlePhotoPath(@Param("fkArticle") Integer fkArticle,@Param("photoPath") String photoPath);
+
+    /**
+     *  根据用户id 获取其发布的商品
+     * @param userId
+     */
+    public List<ArticleAndCommentAndUser> getCommoditysByUseId(@Param("userId") Integer userId);
+
+    /**
+     * 根据帖子id删除帖子
+     * @param commodityId 帖子id
+     */
+    public void deleteCommodityByCommodityId(@Param("id") Integer commodityId);
 }

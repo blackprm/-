@@ -90,7 +90,9 @@
             `t_article_comment`.article_comment_date article_comment_date,
             `t_article_comment`.article_comment_id article_comment_id,
             `t_article_comment`.fk_article_id fk_article_id,
-            `t_article_comment`.fk_user_id fk_comment_user_id
+            `t_article_comment`.fk_user_id fk_comment_user_id,
+            `t_article_comment`.comment_user_nike comment_user_nike,
+            `t_article_comment`.comment_user_phone_path comment_user_phone_path
         FROM
             t_publish
                 LEFT JOIN t_article_comment ON ( t_publish.publish_id = t_article_comment.fk_article_id )
@@ -98,4 +100,30 @@
                 LEFT JOIN t_publish_photo ON(t_publish_photo.fk_article_publish_id = t_publish.publish_id)
         WHERE t_publish.publish_id = #{id}
     </select>
+
+    <!-- 根据用户id获取其所有帖子 -->
+    <select id="getCommoditysByUseId" resultMap="ArticleAndCommentAndUser">
+        SELECT
+            `t_publish`.*,
+            `t_user`.*,
+            `t_publish_photo`.*,
+            `t_article_comment`.article_comment_content article_comment_content,
+            `t_article_comment`.article_comment_date article_comment_date,
+            `t_article_comment`.article_comment_id article_comment_id,
+            `t_article_comment`.fk_article_id fk_article_id,
+            `t_article_comment`.fk_user_id fk_comment_user_id,
+            `t_article_comment`.comment_user_nike comment_user_nike,
+            `t_article_comment`.comment_user_phone_path comment_user_phone_path
+        FROM
+            t_publish
+                LEFT JOIN t_article_comment ON ( t_publish.publish_id = t_article_comment.fk_article_id )
+                LEFT JOIN t_user ON ( t_publish.fk_user_id = t_user.user_id )
+                LEFT JOIN t_publish_photo ON(t_publish_photo.fk_article_publish_id = t_publish.publish_id)
+        WHERE t_user.user_id = #{userId}
+    </select>
+
+    <!--根据帖子id删除帖子-->
+    <delete id="deleteCommodityByCommodityId">
+        DELETE  from `t_publish` WHERE publish_id = #{id}
+    </delete>
 </mapper>

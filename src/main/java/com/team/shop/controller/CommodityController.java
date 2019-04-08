@@ -39,7 +39,6 @@ public class CommodityController {
      * @return
      */
     @PostMapping("/addCommodity")
-    @PassToken
     public Map<String,Object> addCommodity(@RequestBody Commodity commodity){
 
          Map<String,Object> res = new HashMap<>();
@@ -115,9 +114,18 @@ public class CommodityController {
      * @return
      */
     @GetMapping("/getCommodityById/{id}")
-    @PassToken
     public Commodity getCommodityById(@PathVariable("id") Integer id){
         return commodityService.getCommodityById(id);
     }
 
+    @GetMapping("/getCommoditysByUserId/{id}")
+    public Object getCommoditysByUserId(@PathVariable("id") Integer id){
+        return commodityService.getCommoditysByUseId(id);
+    }
+
+
+    @GetMapping("/deleteCommodityByCommodityId/{id}")
+    public void deleteCommodityByCommodityId(@PathVariable("id") Integer id){
+        commodityService.deleteCommodityByCommodityId(id);
+    }
 }
