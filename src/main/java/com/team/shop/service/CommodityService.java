@@ -50,4 +50,8 @@ public class CommodityService {
     public Commodity getCommodityById(Integer id){
         return commodityMapper.getCommodityById(id);
     }
+
+    public void addArticlePath(Integer articleId,String ptotoPath){
+        commodityMapper.addArticlePhotoPath(articleId,ptotoPath);
+    }
 }

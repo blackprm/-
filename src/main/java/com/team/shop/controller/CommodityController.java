@@ -3,8 +3,10 @@ package com.team.shop.controller;
 import com.team.shop.annotation.PassToken;
 import com.team.shop.bean.ArticleComment;
 import com.team.shop.bean.Commodity;
+import com.team.shop.bean.User;
 import com.team.shop.pojo.ArticleAndCommentAndUser;
 import com.team.shop.service.CommodityService;
+import com.team.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,12 @@ import java.util.Map;
 public class CommodityController {
 
     private CommodityService commodityService;
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setCommodityService(CommodityService commodityService) {
@@ -31,11 +39,17 @@ public class CommodityController {
      * @return
      */
     @PostMapping("/addCommodity")
+    @PassToken
     public Map<String,Object> addCommodity(@RequestBody Commodity commodity){
 
          Map<String,Object> res = new HashMap<>();
          commodity.setPublishDate(new Date());
-         commodityService.addCommdity(commodity);
+
+
+        commodityService.addCommdity(commodity);
+
+
+
          if(commodity.getPublishId() == null){
              res.put("code",-1);
              res.put("message","发布失败");
@@ -43,9 +57,19 @@ public class CommodityController {
          }else{
              res.put("code",1);
              res.put("message","发布成功");
+             Integer publishId = commodity.getPublishId();
+             String[] photoPaths = commodity.getPics();
+             if(photoPaths != null){
+                 for(String photoPath:photoPaths){
+                     commodityService.addArticlePath(publishId,photoPath);
+                 }
+             }
+
+
              return res;
          }
     }
+
 
     /**
      * 添加评论
@@ -55,6 +79,12 @@ public class CommodityController {
     @PostMapping("/addComment")
     public Map<String,Object> addComment(@RequestBody ArticleComment articleComment){
         Map<String,Object> res = new HashMap<>();
+        User user = userService.getUser(articleComment.getFkUserId());
+
+
+        articleComment.setCommentUserNike(user.getUserNike());
+        articleComment.setCommentUserPhonePath(user.getUserPhotoPath());
+
         commodityService.addComment(articleComment);
         if(articleComment.getArticleCommentId() == null){
             res.put("code",-1);
@@ -79,14 +109,15 @@ public class CommodityController {
         return res;
     }
 
-
     /**
      *  根据Id获取商品细节
      * @param id
      * @return
      */
     @GetMapping("/getCommodityById/{id}")
+    @PassToken
     public Commodity getCommodityById(@PathVariable("id") Integer id){
         return commodityService.getCommodityById(id);
     }
+
 }

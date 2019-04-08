@@ -80,6 +80,10 @@ public class UserController {
     }
 
 
+    @GetMapping("/userById/{id}")
+    public User getUser(@PathVariable("id") Integer id){
+        return userService.getUser(id);
+    }
 
     /**
      *  向用户邮箱发送验证码

@@ -48,13 +48,18 @@ public class CommodityTest {
     public void ArticleAndCommentAndUser() {
 
         List<ArticleAndCommentAndUser> allArticleAndCommentAndUser = commodityMapper.getAllArticleAndCommentAndUser();
-        System.out.println(allArticleAndCommentAndUser.get(0).getUser().getUserPhotoPath());
+        System.out.println(allArticleAndCommentAndUser.get(0).getCommodityPhotos());
     }
 
     @Test
     public void getCommodityById() {
-        Commodity c = commodityMapper.getCommodityById(20);
+        Commodity c = commodityMapper.getCommodityById(33);
         System.out.println(c);
+    }
+
+    @Test
+    public void addCommodityPhoto() {
+        commodityMapper.addArticlePhotoPath(26,"1.jpg");
     }
 
 }

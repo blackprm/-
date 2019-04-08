@@ -3,6 +3,7 @@ package com.team.shop.mapper;
 import com.team.shop.bean.ArticleComment;
 import com.team.shop.bean.Commodity;
 import com.team.shop.pojo.ArticleAndCommentAndUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,10 +33,10 @@ public interface CommodityMapper {
      * @param id 商品id
      * @return
      */
-    public Commodity getCommodityById(Integer id);
+    public ArticleAndCommentAndUser getCommodityById(Integer id);
 
     /**
      * 添加帖子照片路径
      */
-    public void addArticlePhotoPath(Integer fkUser,String photoPath);
+    public void addArticlePhotoPath(@Param("fkArticle") Integer fkArticle,@Param("photoPath") String photoPath);
 }

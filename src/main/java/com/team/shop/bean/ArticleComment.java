@@ -17,4 +17,8 @@ public class ArticleComment {
     private String articleCommentContent;
     private Integer fkArticleId;
     private Integer fkUserId;
+
+    private String commentUserNike;
+    private String commentUserPhonePath;
+
 }

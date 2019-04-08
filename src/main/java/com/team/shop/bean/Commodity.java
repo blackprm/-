@@ -36,4 +36,12 @@ public class Commodity {
 
     private String publishStyle;
 
+    private String[] pics;
+
+
+    // 发布所属类目
+        private String tag;
+
+
+
 }
