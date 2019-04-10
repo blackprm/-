@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.team.shop.mapper.ChatMapper">
+
+    <insert id="addRoom" useGeneratedKeys="true" keyProperty="roomId">
+        INSERT INTO `t_room` (room_name, fk_user1, fk_user2, room_create_time)
+        VALUES (#{roomName}, #{fkUser1}, #{fkUser2}, #{roomCreateTime})
+    </insert>
+
+    <insert id="addChat" useGeneratedKeys="true" keyProperty="chatId">
+        INSERT INTO `t_chat` (`from`, `to`, sendTime, chat_content, fk_room_id)
+        VALUES (#{from}, #{to}, #{sendTime}, #{chatContent}, #{fkRoomId})
+    </insert>
+
+
+    <resultMap id="RoomAndChat" type="com.team.shop.pojo.RoomAndChat">
+        <id column="room_id" property="roomId" />
+        <result column="room_name" property="roomName" />
+        <result column="fk_user1" property="fkUser1" />
+        <result column="fk_user2" property="fkUser2" />
+        <result column="room_create_time" property="roomCreateTime" />
+
+
+        <association property="user1" javaType="com.team.shop.bean.User">
+            <id property="userId" column="user1_id" />
+            <result property="userNike" column="user1_nike"/>
+            <result property="userEmail" column="user1_email"/>
+            <result property="userPhone" column="user1_phone"/>
+            <result property="userPhotoPath" column="user1_photo_path"/>
+            <result property="userDes" column="user1_des"/>
+        </association>
+        <association property="user2" javaType="com.team.shop.bean.User">
+            <id property="userId" column="user2_id" />
+            <result property="userNike" column="user2_nike"/>
+            <result property="userEmail" column="user2_email"/>
+            <result property="userPhone" column="user2_phone"/>
+            <result property="userPhotoPath" column="user2_photo_path"/>
+            <result property="userDes" column="user2_des"/>
+        </association>
+        <collection property="chats" ofType="com.team.shop.bean.Chat">
+            <id column="chat_id" property="chatId"/>
+            <result column="from" property="from" />
+            <result column="to" property="to" />
+            <result column="isRead" property="isRead" />
+            <result column="sendTime" property="sendTime" />
+            <result column="chat_content" property="chatContent" />
+            <result column="fk_room_id" property="fkRoomId" />
+        </collection>
+
+    </resultMap>
+    <select id="getRoomAndChatById" resultMap="RoomAndChat">
+        SELECT
+            t_room.*,
+            t_chat.*,
+            user1.user_id user1_id,
+            user1.user_email user1_email,
+            user1.user_nike user1_nike,
+            user1.user_des user1_des,
+            user1.user_photo_path user1_photo_path,
+            user1.user_phone user1_phone,
+            user2.user_id user2_id,
+            user2.user_email user2_email,
+            user2.user_nike user2_nike,
+            user2.user_des user2_des,
+            user2.user_photo_path user2_photo_path,
+            user2.user_phone user2_phone
+        FROM
+            t_room
+                LEFT JOIN t_chat ON ( t_chat.fk_room_id = t_room.room_id )
+                LEFT JOIN t_user user1 ON ( t_room.fk_user1 = user1.user_id )
+                LEFT JOIN t_user user2 ON ( t_room.fk_user2 = user2.user_id )
+        WHERE
+            (`fk_user1` = #{user1} AND `fk_user2` = #{user2}) OR (`fk_user1` = #{user2} AND `fk_user2` = #{user1})
+        ORDER BY sendTime
+    </select>
+
+    <select id="getUserRoomsByUserId" resultMap="RoomAndChat">
+        SELECT
+            t_room.*,
+            t_chat.*,
+            user1.user_id user1_id,
+            user1.user_email user1_email,
+            user1.user_nike user1_nike,
+            user1.user_des user1_des,
+            user1.user_photo_path user1_photo_path,
+            user1.user_phone user1_phone,
+            user2.user_id user2_id,
+            user2.user_email user2_email,
+            user2.user_nike user2_nike,
+            user2.user_des user2_des,
+            user2.user_photo_path user2_photo_path,
+            user2.user_phone user2_phone
+        FROM
+            t_room
+                LEFT JOIN t_chat ON ( t_chat.fk_room_id = t_room.room_id )
+                LEFT JOIN t_user user1 ON ( t_room.fk_user1 = user1.user_id )
+                LEFT JOIN t_user user2 ON ( t_room.fk_user2 = user2.user_id )
+        WHERE
+            `fk_user1` = #{id} OR `fk_user2` = #{id}
+        ORDER BY sendTime
+    </select>
+
+    <update id="setChatRead">
+        UPDATE `t_chat` SET isRead = 1 WHERE chat_id = #{chatId}
+    </update>
+</mapper>
