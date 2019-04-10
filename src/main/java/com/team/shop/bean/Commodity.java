@@ -40,7 +40,7 @@ public class Commodity {
 
 
     // 发布所属类目
-        private String tag;
+    private String tag;
 
 
 

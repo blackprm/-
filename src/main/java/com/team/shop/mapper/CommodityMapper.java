@@ -51,4 +51,11 @@ public interface CommodityMapper {
      * @param commodityId 帖子id
      */
     public void deleteCommodityByCommodityId(@Param("id") Integer commodityId);
+
+
+    /**
+     *  修改商品细节
+     * @param commodity 新的商品细节
+     */
+    public Integer updateCommodityDetail(Commodity commodity);
 }

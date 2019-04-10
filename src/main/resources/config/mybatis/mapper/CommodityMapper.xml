@@ -126,4 +126,16 @@
     <delete id="deleteCommodityByCommodityId">
         DELETE  from `t_publish` WHERE publish_id = #{id}
     </delete>
+
+
+    <update id="updateCommodityDetail" >
+        UPDATE `t_publish`
+        SET publish_title = #{publishTitle},
+            publish_price = #{publishPrice},
+            tag = #{tag},
+            publish_style = #{publishStyle},
+            publish_content = #{publishContent}
+        WHERE
+            publish_id = #{publishId}
+    </update>
 </mapper>

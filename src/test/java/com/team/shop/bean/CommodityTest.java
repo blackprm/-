@@ -62,4 +62,20 @@ public class CommodityTest {
         commodityMapper.addArticlePhotoPath(26,"1.jpg");
     }
 
+    @Test
+    public void updateCommodityDetail(){
+
+        Commodity c = new Commodity();
+        c.setPublishId(86);
+        c.setPublishPrice(123.0f);
+        c.setPublishTitle("mapper xiugai");
+        c.setPublishStyle("网上交易");
+        c.setPublishTitle("aaaa");
+        c.setPublishContent("asdsdsd");
+        commodityMapper.updateCommodityDetail(c);
+
+
+        System.out.println(c);
+    }
+
 }

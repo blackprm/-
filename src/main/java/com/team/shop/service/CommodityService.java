@@ -69,7 +69,21 @@ public class CommodityService {
         return commodityMapper.getCommoditysByUseId(userId);
     }
 
+    /**
+     *  通过商品或评论id删除
+     * @param commodityId
+     */
     public void deleteCommodityByCommodityId(Integer commodityId){
         commodityMapper.deleteCommodityByCommodityId(commodityId);
+    }
+
+    /**
+     *  根据商品Id 修改商品细节
+     * @param commoditcy
+     * @return
+     */
+    public Integer updateCommodityDetail(Commodity commoditcy){
+        Integer res = commodityMapper.updateCommodityDetail(commoditcy);
+        return res;
     }
 }

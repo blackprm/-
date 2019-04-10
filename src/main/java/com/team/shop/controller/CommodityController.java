@@ -128,4 +128,21 @@ public class CommodityController {
     public void deleteCommodityByCommodityId(@PathVariable("id") Integer id){
         commodityService.deleteCommodityByCommodityId(id);
     }
+
+    @PostMapping("/updateCommodityDetailById")
+    @PassToken
+    public Map<String,Object> updateCommodityDetail(@RequestBody Commodity c){
+        Map<String,Object> res = new HashMap<>();
+        Integer affRow = commodityService.updateCommodityDetail(c);
+        if(affRow == 1){
+            // 修改成功
+            res.put("code",1);
+            Commodity newCom = commodityService.getCommodityById(c.getPublishId());
+            res.put("newCommodity",newCom);
+            return res;
+        }else{
+            res.put("code",-1);
+            return res;
+        }
+    }
 }
