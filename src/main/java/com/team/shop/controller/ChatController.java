@@ -37,7 +37,8 @@ public class ChatController {
     }
 
     @PostMapping("/room")
-    public Map<String,Object> addRoom(@RequestBody Room room){
+    @PassToken
+  public Map<String,Object> addRoom(@RequestBody Room room){
 
         Map<String ,Object> res = new HashMap<>();
         List<RoomAndChat> roomAndChatById = chatService.getRoomAndChatById(room.getFkUser1(), room.getFkUser2());
@@ -104,6 +105,22 @@ public class ChatController {
     @PassToken
     public void setChatRead(@PathVariable("id") Integer id){
         chatService.setChatRead(id);
+    }
+
+
+    @GetMapping("/room/roomid/{roomid}")
+    @PassToken
+    public Map<String,Object> getRoomAndChatByRoomId(@PathVariable("roomid") Integer id){
+        Map<String,Object> res =  new HashMap<>();
+        RoomAndChat roomAndChatByRoomId = chatService.getRoomAndChatByRoomId(id);
+        if(roomAndChatByRoomId != null){
+            res.put("code",1);
+            res.put("room",roomAndChatByRoomId);
+        }else {
+            res.put("code",-1);
+            res.put("message","未找到指定聊天室");
+        }
+        return res;
     }
 
 }

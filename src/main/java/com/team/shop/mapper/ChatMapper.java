@@ -20,4 +20,6 @@ public interface ChatMapper {
 
     List<RoomAndChat> getUserRoomsByUserId(Integer userId);
 
+    RoomAndChat getRoomAndChatByRoomId(Integer roomId);
+
 }

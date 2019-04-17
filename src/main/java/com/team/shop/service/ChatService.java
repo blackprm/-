@@ -46,4 +46,8 @@ public class ChatService {
         return chatMapper.getUserRoomsByUserId(userId);
     }
 
+    public RoomAndChat getRoomAndChatByRoomId(Integer rooId){
+        return chatMapper.getRoomAndChatByRoomId(rooId);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.team.shop.bean;
 
 
+import com.alibaba.fastjson.JSON;
 import com.team.shop.mapper.ChatMapper;
 import com.team.shop.pojo.RoomAndChat;
 import org.junit.Test;
@@ -65,6 +66,13 @@ public class ChatTest {
     @Test
     public void setChatRead(){
         chatMapper.setChatRead(2);
+    }
+
+
+    @Test
+    public void getRoomAndChatByRoomId(){
+        RoomAndChat roomAndChatByRoomId = chatMapper.getRoomAndChatByRoomId(23);
+        System.out.println(JSON.toJSON(roomAndChatByRoomId));
     }
 
 }

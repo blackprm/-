@@ -103,4 +103,31 @@
     <update id="setChatRead">
         UPDATE `t_chat` SET isRead = 1 WHERE chat_id = #{chatId}
     </update>
+
+    <select id="getRoomAndChatByRoomId" resultMap="RoomAndChat">
+        SELECT
+            t_room.*,
+            t_chat.*,
+            user1.user_id user1_id,
+            user1.user_email user1_email,
+            user1.user_nike user1_nike,
+            user1.user_des user1_des,
+            user1.user_photo_path user1_photo_path,
+            user1.user_phone user1_phone,
+            user2.user_id user2_id,
+            user2.user_email user2_email,
+            user2.user_nike user2_nike,
+            user2.user_des user2_des,
+            user2.user_photo_path user2_photo_path,
+            user2.user_phone user2_phone
+        FROM
+            t_room
+                LEFT JOIN t_chat ON ( t_chat.fk_room_id = t_room.room_id )
+                LEFT JOIN t_user user1 ON ( t_room.fk_user1 = user1.user_id )
+                LEFT JOIN t_user user2 ON ( t_room.fk_user2 = user2.user_id )
+        WHERE
+            `t_room`.room_id = #{roomId}
+        ORDER BY
+            sendTime
+    </select>
 </mapper>
